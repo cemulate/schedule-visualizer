@@ -1,0 +1,22 @@
+/* Color */
+
+/*#headerContainer {
+    background-color: #e9e9e9;
+    border-bottom: 1px solid #7d7d7d;
+}*/
+
+/* Layout fixes */
+
+#inputText {
+    height: 130px;
+}
+
+.well {
+    padding-bottom: 0;
+}
+
+/* Font Changes */
+
+body textarea {
+    font-family: "Lucida Console";
+}
