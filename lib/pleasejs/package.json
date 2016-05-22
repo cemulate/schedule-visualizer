@@ -1,0 +1,83 @@
+{
+  "_args": [
+    [
+      "pleasejs@^0.4.2",
+      "C:\\Users\\Chase\\Desktop\\schedule-visualizer"
+    ]
+  ],
+  "_from": "pleasejs@>=0.4.2 <0.5.0",
+  "_id": "pleasejs@0.4.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/pleasejs",
+  "_nodeVersion": "0.10.33",
+  "_npmUser": {
+    "email": "jordan.checkman@gmail.com",
+    "name": "fooidge"
+  },
+  "_npmVersion": "2.1.7",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "pleasejs",
+    "raw": "pleasejs@^0.4.2",
+    "rawSpec": "^0.4.2",
+    "scope": null,
+    "spec": ">=0.4.2 <0.5.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/pleasejs/-/pleasejs-0.4.2.tgz",
+  "_shasum": "aaaa1a5fa6902518de7e51e3c63b5f537f823164",
+  "_shrinkwrap": null,
+  "_spec": "pleasejs@^0.4.2",
+  "_where": "C:\\Users\\Chase\\Desktop\\schedule-visualizer",
+  "author": {
+    "name": "Jordan Checkman"
+  },
+  "bugs": {
+    "url": "https://github.com/Fooidge/PleaseJS/issues"
+  },
+  "dependencies": {},
+  "description": "JS library to generate random pleasing colors/color schemes",
+  "devDependencies": {
+    "gulp": "^3.8.9",
+    "gulp-bump": "^0.1.11",
+    "gulp-jshint": "^1.7.1",
+    "gulp-uglify": "^0.3.2",
+    "gulp-watch": "^0.6.10",
+    "jshint-stylish": "^0.4.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "aaaa1a5fa6902518de7e51e3c63b5f537f823164",
+    "tarball": "https://registry.npmjs.org/pleasejs/-/pleasejs-0.4.2.tgz"
+  },
+  "gitHead": "f4c00cf7a87051ebd2a2e4073717d11b61b531c9",
+  "homepage": "https://github.com/Fooidge/PleaseJS",
+  "keywords": [
+    "color",
+    "random",
+    "scheme"
+  ],
+  "license": "MIT",
+  "main": "./dist/Please.js",
+  "maintainers": [
+    {
+      "name": "fooidge",
+      "email": "jordan.checkman@gmail.com"
+    }
+  ],
+  "name": "pleasejs",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fooidge/PleaseJS.git"
+  },
+  "scripts": {
+    "test": "Please.make_color();"
+  },
+  "version": "0.4.2"
+}
