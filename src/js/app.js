@@ -1,4 +1,5 @@
-var daymap = {'m':0, 't':1, 'w':2, 'h':3, 'f':4};
+var days = ['m', 't', 'w', 'h', 'f'];
+var daynames = {'m': 'Mon', 't': 'Tue', 'w': 'Wed', 'h': 'Thu', 'f': 'Fri'};
 
 function makeDayTime(s) {
 	return new Date("Jan 1, 1970 " + s);
@@ -22,10 +23,10 @@ class ScheduleRenderer {
 		this.cwidth = cwidth;
 		this.cheight = cheight;
 
-		this._ox = 8;
+		this._ox = 60;
 		this._oy = 8;
-		this._realWidth = cwidth - 16;
-		this._realHeight = cheight - 16;
+		this._realWidth = cwidth - 68;
+		this._realHeight = cheight - 28;
 
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -39,26 +40,62 @@ class ScheduleRenderer {
 		this.items = [];
 	}
 
+	drawGrid() {
+		var d = new Date(this.startTime);
+		while (this.endTime - d > 0) {
+			var x = this._ox + (d - this.startTime) / (this.endTime - this.startTime) * this._realWidth;
+			var line = this.canvas.line(x, 0, x, this.cheight);
+			line.attr({
+				stroke: "gray",
+				strokeWidth: 1
+			});
+			var text = this.canvas.text(x + 5, this.cheight, d.getHours() == 12 ? 12 : d.getHours() % 12);
+			d.setHours(d.getHours() + 1);
+		}
+
+		for (var day of days.slice(1)) {
+			var y = this._oy + days.indexOf(day) / 5 * this._realHeight;
+			var line = this.canvas.line(0, y, this.cwidth, y);
+			line.attr({
+				stroke: "gray",
+				strokeWidth: 1
+			});
+		}
+
+		for (var day of days) {
+			var y = this._oy + days.indexOf(day) / 5 * this._realHeight;
+			var text = this.canvas.text(5, y+18, daynames[day]);
+		}
+	}
+
 	drawItem(item) {
 		for (var d of item.days) {
 			var xs = this._ox + (item.startTime - this.startTime) / (this.endTime - this.startTime) * this._realWidth;
 			var xe = this._ox + (item.endTime - this.startTime) / (this.endTime - this.startTime) * this._realWidth;
-			var ys = this._oy + daymap[d] / 5 * this._realHeight + 10;
+			var ys = this._oy + days.indexOf(d) / 5 * this._realHeight + 6;
 
-			var r = this.canvas.rect(xs,ys,xe-xs,this.cheight/5 - 10, 5, 5);
+			var r = this.canvas.rect(xs,ys,xe-xs,this._realHeight/5 - 12, 5, 5);
 			r.attr({
 				fill: Please.make_color(),
 				stroke: "#000000",
 				strokeWidth: 4
 			});
+
+			var name = this.canvas.text(xs+5, ys+18, item.name);
+			var place = this.canvas.text(xs+5, ys+38, item.place);
 		}
 	}
 
 	render() {
 		this.canvas.clear();
+		this.drawGrid();
 		for (var item of this.items) {
 			this.drawItem(item);
 		}
+		this.canvas.selectAll("text").attr({
+			fontFamily: "monospace",
+			fontSize: 15
+		});
 	}
 }
 
