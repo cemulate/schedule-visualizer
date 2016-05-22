@@ -40,6 +40,21 @@ class ScheduleRenderer {
 		this.items = [];
 	}
 
+	setItemsFromString(s) {
+		this.clearItems();
+        for (var line of s.split("\n")) {
+            if (line == "" || line.charAt(0) == "#") continue;
+
+			var [name, place, start, end, days] = line.split(',').map(x => x.trim());
+			var startTime = makeDayTime(start);
+			var endTime = makeDayTime(end);
+			if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) break;
+            this.addItem(new ScheduleItem(name, place, makeDayTime(start), makeDayTime(end), Array.from(days)));
+			return true;
+        }
+		return false;
+	}
+
 	drawGrid() {
 		var d = new Date(this.startTime);
 		while (this.endTime - d > 0) {
@@ -99,9 +114,40 @@ class ScheduleRenderer {
 	}
 }
 
-var renderer = new ScheduleRenderer(Snap("#canvas"), makeDayTime("7:00 AM"), makeDayTime("7:00 PM"), $("#canvas").width(), $("#canvas").height());
-renderer.addItem(new ScheduleItem("Name", "Place", makeDayTime("8:00 AM"), makeDayTime("8:50 AM"), ['m', 'w', 'f']));
-renderer.addItem(new ScheduleItem("Name2", "Place2", makeDayTime("7:00 AM"), makeDayTime("7:00 PM"), ['t', 'h']));
-renderer.render();
+$(document).ready(function() {
+	var renderer = new ScheduleRenderer(Snap("#canvas"), makeDayTime("7:00 AM"), makeDayTime("7:00 PM"), $("#canvas").width(), $("#canvas").height());
+	renderer.render();
+	console.log(renderer);
+	var hash = window.location.hash ? window.location.hash.substring(1) : null;
 
-console.log(renderer);
+	var sString = null;
+	if (hash != null) {
+		sString = decodeURIComponent(hash);
+		renderer.setItemsFromString(sString);
+		renderer.render();
+	}
+
+	$("#inputText").keydown(e => {
+		if (e.keyCode == 13 && e.ctrlKey) {
+			var text = $("#inputText").val();
+			text = text.split('\n').filter(line => !(line == "" || line.startsWith('#'))).join('\n');
+			console.log(text);
+			var success = renderer.setItemsFromString(text);
+			if (!success) alert("Malformed input");
+			renderer.render();
+
+			var encoded = encodeURIComponent(text);
+			$("#shareLink").attr("href", "#" + encoded);
+
+			e.preventDefault();
+		}
+	});
+
+	var text = `# Enter classes using the following format (lines starting with # are ignored)
+# Class, Location, 8:00 AM, 8:50 AM, mwf
+# Class, Location, 11:00 AM, 12:15 PM, th`
+	text = sString ? text + '\n' + sString : text;
+
+	$("#inputText").val(text);
+
+});
