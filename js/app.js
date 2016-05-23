@@ -194,8 +194,8 @@ var ScheduleRenderer = function () {
 						strokeWidth: 4
 					});
 
-					var name = this.canvas.text(xs + 5, ys + 18, item.name);
-					var place = this.canvas.text(xs + 5, ys + 38, item.place);
+					var name = this.canvas.text(xs + 5, ys + 18, item.name).addClass("item-text");
+					var place = this.canvas.text(xs + 5, ys + 38, item.place).addClass("item-text");
 				}
 			} catch (err) {
 				_didIteratorError4 = true;
@@ -246,6 +246,9 @@ var ScheduleRenderer = function () {
 				fontFamily: "monospace",
 				fontSize: 15
 			});
+			this.canvas.selectAll(".item-text").attr({
+				fontSize: 12
+			});
 		}
 	}]);
 
@@ -272,6 +275,8 @@ $(document).ready(function () {
 			}).join('\n');
 			var success = renderer.setItemsFromString(text);
 			if (!success) alert("Malformed input");
+			renderer.cwidth = $("#canvas").width();
+			renderer.cheight = $("#canvas").height();
 			renderer.render();
 
 			var encoded = btoa(text);
