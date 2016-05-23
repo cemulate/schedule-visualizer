@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 	var sString = null;
 	if (hash != null) {
-		sString = decodeURIComponent(hash);
+		sString = atob(hash);
 		renderer.setItemsFromString(sString);
 		renderer.render();
 	}
@@ -134,7 +134,7 @@ $(document).ready(function() {
 			if (!success) alert("Malformed input");
 			renderer.render();
 
-			var encoded = encodeURIComponent(text);
+			var encoded = btoa(text);
 			$("#shareLink").attr("href", "#" + encoded);
 
 			e.preventDefault();
