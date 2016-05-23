@@ -56,6 +56,7 @@ var ScheduleRenderer = function () {
 		key: 'setItemsFromString',
 		value: function setItemsFromString(s) {
 			this.clearItems();
+			console.log(s.split('\n'));
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
 			var _iteratorError = undefined;
@@ -64,6 +65,7 @@ var ScheduleRenderer = function () {
 				for (var _iterator = s.split("\n")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var line = _step.value;
 
+					console.log(line);
 					if (line == "" || line.charAt(0) == "#") continue;
 
 					var _line$split$map = line.split(',').map(function (x) {
@@ -80,9 +82,8 @@ var ScheduleRenderer = function () {
 
 					var startTime = makeDayTime(start);
 					var endTime = makeDayTime(end);
-					if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) break;
+					if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) return false;
 					this.addItem(new ScheduleItem(name, place, makeDayTime(start), makeDayTime(end), Array.from(days)));
-					return true;
 				}
 			} catch (err) {
 				_didIteratorError = true;
@@ -99,7 +100,7 @@ var ScheduleRenderer = function () {
 				}
 			}
 
-			return false;
+			return true;
 		}
 	}, {
 		key: 'drawGrid',
@@ -175,6 +176,7 @@ var ScheduleRenderer = function () {
 	}, {
 		key: 'drawItem',
 		value: function drawItem(item) {
+			var color = Please.make_color();
 			var _iteratorNormalCompletion4 = true;
 			var _didIteratorError4 = false;
 			var _iteratorError4 = undefined;
@@ -189,7 +191,7 @@ var ScheduleRenderer = function () {
 
 					var r = this.canvas.rect(xs, ys, xe - xs, this._realHeight / 5 - 12, 5, 5);
 					r.attr({
-						fill: Please.make_color(),
+						fill: color,
 						stroke: "#000000",
 						strokeWidth: 4
 					});
@@ -271,7 +273,6 @@ $(document).ready(function () {
 			text = text.split('\n').filter(function (line) {
 				return !(line == "" || line.startsWith('#'));
 			}).join('\n');
-			console.log(text);
 			var success = renderer.setItemsFromString(text);
 			if (!success) alert("Malformed input");
 			renderer.render();
