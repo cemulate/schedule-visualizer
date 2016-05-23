@@ -42,9 +42,7 @@ class ScheduleRenderer {
 
 	setItemsFromString(s) {
 		this.clearItems();
-		console.log(s.split('\n'));
         for (var line of s.split("\n")) {
-			console.log(line);
             if (line == "" || line.charAt(0) == "#") continue;
 
 			var [name, place, start, end, days] = line.split(',').map(x => x.trim());
@@ -119,7 +117,6 @@ class ScheduleRenderer {
 $(document).ready(function() {
 	var renderer = new ScheduleRenderer(Snap("#canvas"), makeDayTime("7:00 AM"), makeDayTime("7:00 PM"), $("#canvas").width(), $("#canvas").height());
 	renderer.render();
-	console.log(renderer);
 	var hash = window.location.hash ? window.location.hash.substring(1) : null;
 
 	var sString = null;
