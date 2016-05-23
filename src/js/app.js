@@ -96,8 +96,8 @@ class ScheduleRenderer {
 				strokeWidth: 4
 			});
 
-			var name = this.canvas.text(xs+5, ys+18, item.name);
-			var place = this.canvas.text(xs+5, ys+38, item.place);
+			var name = this.canvas.text(xs+5, ys+18, item.name).addClass("item-text");
+			var place = this.canvas.text(xs+5, ys+38, item.place).addClass("item-text");
 		}
 	}
 
@@ -110,6 +110,9 @@ class ScheduleRenderer {
 		this.canvas.selectAll("text").attr({
 			fontFamily: "monospace",
 			fontSize: 15
+		});
+		this.canvas.selectAll(".item-text").attr({
+			fontSize: 12
 		});
 	}
 }
@@ -132,6 +135,8 @@ $(document).ready(function() {
 			text = text.split('\n').filter(line => !(line == "" || line.startsWith('#'))).join('\n');
 			var success = renderer.setItemsFromString(text);
 			if (!success) alert("Malformed input");
+			renderer.cwidth = $("#canvas").width();
+			renderer.cheight = $("#canvas").height();
 			renderer.render();
 
 			var encoded = btoa(text);
