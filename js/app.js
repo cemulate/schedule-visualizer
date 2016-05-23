@@ -56,7 +56,6 @@ var ScheduleRenderer = function () {
 		key: 'setItemsFromString',
 		value: function setItemsFromString(s) {
 			this.clearItems();
-			console.log(s.split('\n'));
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
 			var _iteratorError = undefined;
@@ -65,7 +64,6 @@ var ScheduleRenderer = function () {
 				for (var _iterator = s.split("\n")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var line = _step.value;
 
-					console.log(line);
 					if (line == "" || line.charAt(0) == "#") continue;
 
 					var _line$split$map = line.split(',').map(function (x) {
@@ -257,7 +255,6 @@ var ScheduleRenderer = function () {
 $(document).ready(function () {
 	var renderer = new ScheduleRenderer(Snap("#canvas"), makeDayTime("7:00 AM"), makeDayTime("7:00 PM"), $("#canvas").width(), $("#canvas").height());
 	renderer.render();
-	console.log(renderer);
 	var hash = window.location.hash ? window.location.hash.substring(1) : null;
 
 	var sString = null;
