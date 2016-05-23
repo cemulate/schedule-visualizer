@@ -42,17 +42,18 @@ class ScheduleRenderer {
 
 	setItemsFromString(s) {
 		this.clearItems();
+		console.log(s.split('\n'));
         for (var line of s.split("\n")) {
+			console.log(line);
             if (line == "" || line.charAt(0) == "#") continue;
 
 			var [name, place, start, end, days] = line.split(',').map(x => x.trim());
 			var startTime = makeDayTime(start);
 			var endTime = makeDayTime(end);
-			if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) break;
+			if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) return false;
             this.addItem(new ScheduleItem(name, place, makeDayTime(start), makeDayTime(end), Array.from(days)));
-			return true;
         }
-		return false;
+		return true;
 	}
 
 	drawGrid() {
@@ -84,6 +85,7 @@ class ScheduleRenderer {
 	}
 
 	drawItem(item) {
+		var color = Please.make_color();
 		for (var d of item.days) {
 			var xs = this._ox + (item.startTime - this.startTime) / (this.endTime - this.startTime) * this._realWidth;
 			var xe = this._ox + (item.endTime - this.startTime) / (this.endTime - this.startTime) * this._realWidth;
@@ -91,7 +93,7 @@ class ScheduleRenderer {
 
 			var r = this.canvas.rect(xs,ys,xe-xs,this._realHeight/5 - 12, 5, 5);
 			r.attr({
-				fill: Please.make_color(),
+				fill: color,
 				stroke: "#000000",
 				strokeWidth: 4
 			});
@@ -131,7 +133,6 @@ $(document).ready(function() {
 		if (e.keyCode == 13 && e.ctrlKey) {
 			var text = $("#inputText").val();
 			text = text.split('\n').filter(line => !(line == "" || line.startsWith('#'))).join('\n');
-			console.log(text);
 			var success = renderer.setItemsFromString(text);
 			if (!success) alert("Malformed input");
 			renderer.render();
