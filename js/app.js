@@ -286,7 +286,7 @@ $(document).ready(function () {
 		}
 	});
 
-	var text = '# Enter classes using the following format (lines starting with # are ignored)\n# Class, Location, 8:00 AM, 8:50 AM, mwf\n# Class, Location, 11:00 AM, 12:15 PM, th';
+	var text = '# Enter classes using the following format (lines starting with # are ignored). Use Ctrl-Enter to display.\n# Class, Location, 8:00 AM, 8:50 AM, mwf\n# Class, Location, 11:00 AM, 12:15 PM, th';
 	text = sString ? text + '\n' + sString : text;
 
 	$("#inputText").val(text);
